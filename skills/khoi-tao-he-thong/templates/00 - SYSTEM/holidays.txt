@@ -1,0 +1,7 @@
+# LỊCH NGHỈ LỄ, TẾT CỦA CÔNG TY – dùng cho QT-04 mục 14 (TEMPLATES/deadline.py)
+# Mỗi dòng một ngày dạng dd/mm/yyyy; dòng bắt đầu bằng # là ghi chú.
+# Tham chiếu: Điều 112 Bộ luật Lao động 2019 (đối chiếu văn bản hiện hành và thông báo nghỉ hằng năm):
+#   Tết Dương lịch 01/01; Tết Âm lịch 05 ngày; Giỗ Tổ Hùng Vương 10/3 âm lịch; 30/4; 01/5;
+#   Quốc khánh 02/9 và 01 ngày liền kề (trước hoặc sau).
+# Ngày âm lịch và ngày nghỉ bù: Agent Quản lý nhắc người duyệt bổ sung mỗi năm (MANAGER/AGENT.md §4.2).
+{{HOLIDAYS}}

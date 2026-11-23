@@ -1,0 +1,7 @@
+{
+  "name": "hr-department-ops",
+  "version": "1.0.0",
+  "description": "Hệ thống vận hành Phòng Nhân sự nhiều agent: Agent Quản lý điều phối 6 agent bộ phận (Lương thưởng & Phúc lợi, Tuyển dụng, Đào tạo, Văn hóa doanh nghiệp, Truyền thông nội bộ, Nội bộ Phòng) theo bộ quy tắc chung, cấu trúc thư mục chuẩn, danh mục công việc, sổ mâu thuẫn, bản đồ hệ thống và quy tắc bảo mật dữ liệu nhân sự. Bản trống, dùng cho bất kỳ doanh nghiệp nào.",
+  "author": { "name": "Phòng Nhân sự" },
+  "keywords": ["nhân sự", "HR", "đa agent", "tuyển dụng", "đào tạo", "văn hóa doanh nghiệp", "truyền thông nội bộ", "lương thưởng"]
+}
