@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { SalaryRangeChart } from '../components/SalaryRangeChart';
+
+// Bộ nhớ đệm kết quả AI theo bộ dữ liệu: chuyển thẻ không phải phân tích lại, dữ liệu đổi thì tự phân tích lại
+const aiCache = new Map<string, any>();
 import * as XLSX from 'xlsx';
 import {
   BarChart3,
@@ -67,6 +71,8 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ jobs, candidates }
     forecast: string;
   } | null>(null);
   const [copiedInsight, setCopiedInsight] = useState(false);
+  const [aiError, setAiError] = useState('');
+  const lastKey = useRef('');
 
   // Departments list
   const departments = ['all', ...Array.from(new Set(jobs.map((j) => j.department)))];
@@ -87,7 +93,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ jobs, candidates }
   const offered = filteredCandidates.filter((c) => c.stage === 'Đề nghị việc').length;
   const avgScore = totalApplied > 0
     ? (filteredCandidates.reduce((acc, c) => acc + c.benchmarkScore, 0) / totalApplied).toFixed(1)
-    : '4.3';
+    : '0';
 
   // Source Distribution Data for Pie Chart
   const sourceStats = [
@@ -124,8 +130,13 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ jobs, candidates }
   ];
 
   // 2.1: Kích hoạt Phân Tích Dữ Liệu Tuyển Dụng Bằng AI
-  const handleRunAIAnalytics = async () => {
+  const aiKey = JSON.stringify([selectedDeptFilter, timeRange, totalApplied, benchmarkQualified, avgScore, interviewing, offered, sourceStats.map((x) => x.count)]);
+  const handleRunAIAnalytics = async (force = false) => {
+    const key = aiKey;
+    if (!force && aiCache.has(key)) { setAiInsights(aiCache.get(key)); setAiError(''); return; }
+    lastKey.current = key;
     setIsAnalyzingAI(true);
+    setAiError('');
     try {
       const response = await fetch('/api/analytics/ai-insights', {
         method: 'POST',
@@ -154,13 +165,31 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ jobs, candidates }
 
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Không thể phân tích dữ liệu bằng AI');
-      setAiInsights(data);
+      if (!data?.summaryHeadline && !data?.executiveAnalysis) throw new Error('AI trả kết quả rỗng');
+      const out = {
+        summaryHeadline: String(data.summaryHeadline || ''),
+        executiveAnalysis: String(data.executiveAnalysis || ''),
+        funnelHealth: { status: '', bottleneck: '', conversionRate: '', ...(data.funnelHealth || {}) },
+        channelEffectiveness: Array.isArray(data.channelEffectiveness) ? data.channelEffectiveness : [],
+        strategicRecommendations: Array.isArray(data.strategicRecommendations) ? data.strategicRecommendations : [],
+        forecast: String(data.forecast || ''),
+      };
+      aiCache.set(key, out);
+      if (lastKey.current === key) setAiInsights(out);
     } catch (err) {
-      alert((err as any)?.message || 'AI chưa phân tích được dữ liệu. Vui lòng thử lại.');
+      if (lastKey.current === key) setAiError((err as any)?.message || 'AI chưa phân tích được dữ liệu.');
     } finally {
-      setIsAnalyzingAI(false);
+      if (lastKey.current === key) setIsAnalyzingAI(false);
     }
   };
+
+  // Tự động phân tích khi mở thẻ và mỗi khi dữ liệu/bộ lọc thay đổi (chờ 800 ms để gom thay đổi liên tiếp)
+  useEffect(() => {
+    if (!totalApplied) { setAiInsights(null); return; }
+    if (aiCache.has(aiKey)) { setAiInsights(aiCache.get(aiKey)); setAiError(''); return; }
+    const t = setTimeout(() => handleRunAIAnalytics(), 800);
+    return () => clearTimeout(t);
+  }, [aiKey]);
 
   const handleCopyInsight = () => {
     if (!aiInsights) return;
@@ -399,14 +428,14 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ jobs, candidates }
                 </span>
               </div>
               <p className="text-xs text-[#8E8E93] mt-0.5">
-                Tự động đánh giá sức khỏe phễu, phát hiện điểm nghẽn, thẩm định nguồn tuyển và gợi ý 4 quyết định chiến lược cho đội ngũ TA.
+                Tự động đánh giá sức khỏe phễu, phát hiện điểm nghẽn, thẩm định nguồn tuyển và gợi ý quyết định chiến lược cho đội ngũ tuyển dụng. Tự chạy khi mở thẻ và khi dữ liệu thay đổi.
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
             <button
-              onClick={handleRunAIAnalytics}
+              onClick={() => handleRunAIAnalytics(true)}
               disabled={isAnalyzingAI}
               className="inline-flex items-center gap-2 px-4.5 py-2.5 text-xs font-semibold btn-fluent-primary rounded-full transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -496,10 +525,6 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ jobs, candidates }
                 <p className="text-[#3C3C43] dark:text-[#EBEBF5]/85 text-[11px] leading-relaxed">
                   {aiInsights.forecast}
                 </p>
-                <div className="pt-1 flex items-center gap-1 text-[11px] font-semibold text-[#007AFF] dark:text-[#0A84FF]">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>Tỷ lệ hoàn thành dự kiến: 95% - 100%</span>
-                </div>
               </div>
             </div>
 
@@ -507,7 +532,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ jobs, candidates }
             <div className="p-4 rounded-[18px] bg-[#007AFF]/10 dark:bg-[#0A84FF]/15 border border-[#007AFF]/20 space-y-2.5">
               <span className="font-bold text-xs text-[#007AFF] dark:text-[#0A84FF] flex items-center gap-1.5 uppercase tracking-wider">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>4 Khuyến Nghị Chiến Lược Cho Đội Ngũ Tuyển Dụng (Actionable TA Recommendations)</span>
+                <span>Khuyến nghị chiến lược cho đội ngũ tuyển dụng</span>
               </span>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 text-[11px]">
                 {aiInsights.strategicRecommendations.map((rec, idx) => (
@@ -528,19 +553,28 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ jobs, candidates }
                 <Lightbulb className="w-4 h-4" />
               </div>
               <p className="text-[#3C3C43] dark:text-[#EBEBF5]">
-                Nhấn nút <strong className="text-[#007AFF] dark:text-[#0A84FF]">"Phân Tích Dữ Liệu Bằng AI"</strong> để kích hoạt mô hình AI phân tích sâu sắc các chỉ số phễu, đánh giá hiệu năng chuyển đổi và đưa ra dự báo tăng trưởng cho kỳ tuyển dụng hiện tại.
+                {!totalApplied
+                  ? 'Chưa có hồ sơ ứng viên trong phạm vi lọc nên chưa có dữ liệu để phân tích.'
+                  : isAnalyzingAI
+                  ? 'AI đang tự động phân tích phễu tuyển dụng theo dữ liệu đang hiển thị…'
+                  : aiError
+                  ? `Chưa phân tích được: ${aiError}`
+                  : 'Đang chuẩn bị phân tích tự động…'}
               </p>
             </div>
             <button
-              onClick={handleRunAIAnalytics}
+              onClick={() => handleRunAIAnalytics(true)}
               disabled={isAnalyzingAI}
               className="px-4.5 py-2 text-xs font-semibold btn-fluent-primary rounded-full cursor-pointer shrink-0"
             >
-              Kích Hoạt Phân Tích
+              {aiError ? 'Thử lại' : 'Phân tích ngay'}
             </button>
           </div>
         )}
       </div>
+
+      {/* Khoảng lương công bố theo vị trí (nguồn: SEICO | Báo cáo phòng nhân sự) */}
+      <SalaryRangeChart />
 
       {/* 2. KPI Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
