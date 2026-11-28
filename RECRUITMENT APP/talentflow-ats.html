@@ -4,11 +4,10 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/index.css">
 <style>
-:root{color-scheme:light dark}
+:root{color-scheme:light}
+:root[data-theme="dark"]{color-scheme:light}
 html,body{height:100%;margin:0}
 body{background:#F2F2F7;color:#1C1C1E}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) body{background:#000;color:#F2F2F7}}
-:root[data-theme="dark"] body{background:#000;color:#F2F2F7}
 #root{height:100%}
 </style>
 <div id="root"></div>

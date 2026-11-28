@@ -14,8 +14,7 @@ import {
   Star,
   UserPlus,
   Mail,
-  Home,
-} from 'lucide-react';
+  Home, Menu } from 'lucide-react';
 import { TabType } from './Sidebar';
 import { AppUser, Candidate, InboundEmail, JobPosition } from '../types';
 
@@ -39,6 +38,7 @@ interface TopNavProps {
   onOpenAuthModal?: (mode?: 'login' | 'register') => void;
   onOpenProfileModal?: () => void;
   onOpenLanding?: () => void;
+  onOpenMobileNav?: () => void;
 }
 
 const tabTitles: Record<TabType, { section: string; title: string }> = {
@@ -70,6 +70,7 @@ export const TopNav: React.FC<TopNavProps> = ({
   onOpenAuthModal,
   onOpenProfileModal,
   onOpenLanding,
+  onOpenMobileNav,
 }) => {
   const current = tabTitles[activeTab] || tabTitles.dashboard;
 
@@ -142,20 +143,25 @@ export const TopNav: React.FC<TopNavProps> = ({
   const departments = Array.from(new Set(jobs.map((j) => j.department)));
 
   return (
-    <header className="h-16 px-5 sm:px-6 bg-[#F2F2F7]/80 dark:bg-[#000000]/75 backdrop-blur-2xl flex items-center justify-between gap-4 shrink-0 transition-all z-20 sticky top-0 border-b border-black/[0.08] dark:border-white/[0.1]">
+    <header className="h-16 px-3 sm:px-6 bg-[#F2F2F7]/80 dark:bg-[#000000]/75 backdrop-blur-2xl flex items-center justify-between gap-2 sm:gap-4 shrink-0 transition-all z-20 sticky top-0 border-b border-black/[0.08] dark:border-white/[0.1]">
       {/* Zone 1: iOS Navigation Breadcrumb */}
       <div className="flex items-center gap-2 min-w-0">
-        <span className="text-[12px] text-[#8E8E93] font-medium whitespace-nowrap hidden sm:inline">
+        {onOpenMobileNav && (
+          <button onClick={onOpenMobileNav} aria-label="Mở menu" className="lg:hidden w-9 h-9 -ml-1 flex items-center justify-center rounded-full btn-fluent-glass shrink-0 cursor-pointer">
+            <Menu className="w-5 h-5 text-[#1C1C1E] dark:text-white" />
+          </button>
+        )}
+        <span className="text-[12px] text-[#8E8E93] font-medium whitespace-nowrap hidden xl:inline">
           {current.section}
         </span>
-        <ChevronRight className="w-3.5 h-3.5 text-[#C7C7CC] dark:text-[#48484A] hidden sm:inline shrink-0" />
+        <ChevronRight className="w-3.5 h-3.5 text-[#C7C7CC] dark:text-[#48484A] hidden xl:inline shrink-0" />
         <h1 className="text-[15px] font-bold text-[#1C1C1E] dark:text-white tracking-tight truncate">
           {current.title}
         </h1>
       </div>
 
       {/* Zone 2: iOS Spotlight Search Bar */}
-      <div ref={searchContainerRef} className="relative flex-1 max-w-md mx-2">
+      <div ref={searchContainerRef} className="relative flex-1 max-w-md mx-2 hidden md:block">
         <div className="relative flex items-center">
           <Search className="w-4 h-4 text-[#8E8E93] absolute left-3.5 pointer-events-none" />
           <input
@@ -361,7 +367,7 @@ export const TopNav: React.FC<TopNavProps> = ({
       </div>
 
       {/* Zone 3: iOS Liquid Glass Actions */}
-      <div className="flex items-center gap-2 shrink-0">
+      <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
         {onOpenAuthModal && (
           <button
             onClick={() => onOpenAuthModal('register')}
@@ -386,7 +392,7 @@ export const TopNav: React.FC<TopNavProps> = ({
             <span className="hidden xl:inline text-xs font-semibold text-[#1C1C1E] dark:text-white truncate max-w-[110px]">
               {currentUser.fullName}
             </span>
-            <span className="text-[10px] font-semibold text-[#007AFF] dark:text-[#0A84FF]">
+            <span className="hidden sm:inline text-[10px] font-semibold text-[#007AFF] dark:text-[#0A84FF]">
               {currentUser.role === 'master_admin'
                 ? 'Quản trị hệ thống'
                 : currentUser.role === 'ops_admin'
@@ -432,7 +438,7 @@ export const TopNav: React.FC<TopNavProps> = ({
           onClick={onQuickScan}
           disabled={isScanning}
           title="Kiểm tra email ứng tuyển mới"
-          className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#1C1C1E] dark:text-white btn-fluent-glass rounded-full transition-all disabled:opacity-50 cursor-pointer whitespace-nowrap shrink-0"
+          className="hidden xl:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#1C1C1E] dark:text-white btn-fluent-glass rounded-full transition-all disabled:opacity-50 cursor-pointer whitespace-nowrap shrink-0"
         >
           <RefreshCw className={`w-3.5 h-3.5 text-[#007AFF] dark:text-[#0A84FF] ${isScanning ? 'animate-spin' : ''}`} />
           <span>{isScanning ? 'Đang quét...' : 'Quét Email'}</span>
@@ -440,18 +446,18 @@ export const TopNav: React.FC<TopNavProps> = ({
 
         <button
           onClick={onOpenUploadCV}
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-[#1C1C1E] dark:text-white btn-fluent-glass rounded-full transition-all cursor-pointer whitespace-nowrap shrink-0"
+          className="inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 text-xs font-semibold text-[#1C1C1E] dark:text-white btn-fluent-glass rounded-full transition-all cursor-pointer whitespace-nowrap shrink-0"
         >
           <UploadCloud className="w-3.5 h-3.5 text-[#007AFF] dark:text-[#0A84FF]" />
-          <span>Nạp CV</span>
+          <span className="hidden sm:inline">Nạp CV</span>
         </button>
 
         <button
           onClick={onOpenCreateJD}
-          className="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold btn-fluent-primary rounded-full transition-all cursor-pointer whitespace-nowrap shrink-0"
+          className="inline-flex items-center gap-1.5 px-2.5 sm:px-4 py-1.5 text-xs font-semibold btn-fluent-primary rounded-full transition-all cursor-pointer whitespace-nowrap shrink-0"
         >
           <Sparkles className="w-3.5 h-3.5" />
-          <span>Tạo JD Mới</span>
+          <span className="hidden sm:inline">Tạo JD Mới</span>
         </button>
       </div>
     </header>

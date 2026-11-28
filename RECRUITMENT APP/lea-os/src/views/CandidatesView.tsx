@@ -122,6 +122,7 @@ export const getTenInterviewQuestions = (candidate: Candidate): string[] => {
 };
 
 interface CandidatesViewProps {
+  driveImportSlot?: React.ReactNode;
   candidates: Candidate[];
   jobs: JobPosition[];
   onAddCandidate: (candidate: Candidate) => void;
@@ -149,6 +150,7 @@ export const CandidatesView: React.FC<CandidatesViewProps> = ({
   initialFilterJobId = 'all',
   currentUser,
   contacts = [],
+  driveImportSlot,
 }) => {
   // Search & Filters
   const [searchTerm, setSearchTerm] = useState('');
@@ -670,6 +672,8 @@ Thành tích: Đưa sản phẩm tăng trưởng ARR từ $200K lên $1.2M trong
           <strong className="font-mono text-[#007AFF] dark:text-[#0A84FF] text-sm tabular-nums">{candidates.length}</strong>
         </div>
       </div>
+
+      {driveImportSlot}
 
       {/* ========================================================================= */}
       {/* 2. INTERACTIVE 4-STEP WIZARD (3.4) */}
@@ -1387,8 +1391,8 @@ Thành tích: Đưa sản phẩm tăng trưởng ARR từ $200K lên $1.2M trong
       </div>
 
       {/* 3. Search & Filter Bar - iOS Liquid Glass Panel */}
-      <div className="glass-panel p-4 rounded-[22px] flex flex-col md:flex-row items-center gap-3">
-        <div className="relative flex-1 w-full">
+      <div className="glass-panel p-4 rounded-[22px] flex flex-col xl:flex-row items-center gap-3">
+        <div className="relative flex-1 w-full xl:min-w-[220px]">
           <Search className="w-4 h-4 text-[#8E8E93] absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
@@ -1399,7 +1403,7 @@ Thành tích: Đưa sản phẩm tăng trưởng ARR từ $200K lên $1.2M trong
           />
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 w-full md:w-auto shrink-0">
+        <div className="flex flex-wrap items-center gap-2 w-full xl:w-auto min-w-0">
           {/* Job Filter */}
           <select
             value={filterJobId}

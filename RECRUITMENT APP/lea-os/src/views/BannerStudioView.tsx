@@ -349,7 +349,7 @@ export const BannerStudioView: React.FC<BannerStudioViewProps> = ({
         </div>
 
         {/* Job Selector Dropdown */}
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex flex-wrap items-center gap-2 min-w-0">
           <span className="text-xs text-[#8E8E93] font-medium">Vị trí áp dụng:</span>
           <select
             value={selectedJob.id}

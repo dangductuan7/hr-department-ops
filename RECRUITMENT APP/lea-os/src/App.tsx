@@ -9,7 +9,7 @@ import { MailboxView } from './views/MailboxView';
 import { CandidatesView } from './views/CandidatesView';
 import { AnalyticsView } from './views/AnalyticsView';
 import { AdminView } from './views/AdminView';
-import { DriveImportPanel, DriveFolder } from './components/DriveImportPanel';
+import { DriveImportPanel, DriveConfig } from './components/DriveImportPanel';
 import { initialMailboxSettings } from './data/initialData';
 import { useCollection, useDoc } from './lib/store';
 import { caps, toast } from './lib/runtime';
@@ -40,7 +40,19 @@ const blankProfile = (name: string): Any => ({ fullName: name, phone: '', identi
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(() => window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  // Giao diện mặc định: Sáng (người dùng vẫn bật Tối bằng nút mặt trăng)
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  // Màn hình hẹp (< 1024px): thanh bên thành ngăn kéo trượt
+  const mq = typeof window !== 'undefined' ? window.matchMedia('(max-width: 1023px)') : null;
+  const [isNarrow, setIsNarrow] = useState(() => !!mq?.matches);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  useEffect(() => {
+    if (!mq) return;
+    const f = () => { setIsNarrow(mq.matches); if (!mq.matches) setMobileNavOpen(false); };
+    mq.addEventListener('change', f);
+    return () => mq.removeEventListener('change', f);
+  }, []);
+  const navigate = (t: TabType) => { setActiveTab(t); setMobileNavOpen(false); };
 
   // ---- Dữ liệu dùng chung, lưu trong cơ sở dữ liệu artifact ----
   const [jobsRaw, setJobs] = useCollection<JobPosition>('jobs', { toModel: toJob, order: (a, b) => (a.status === 'Open' ? 0 : 1) - (b.status === 'Open' ? 0 : 1) });
@@ -56,7 +68,7 @@ export default function App() {
     'settings/mailbox_v2',
     { ...initialMailboxSettings, emailAddress: 'hr@seico.vn', mailServer: '', accountId: '', passwordMasked: '', isConnected: false, lastCheckedAt: '', totalReceived: 0 }
   );
-  const [driveCfg, setDriveCfg] = useDoc<{ folders: DriveFolder[] }>('settings/drive', { folders: [] });
+  const [driveCfg, setDriveCfg] = useDoc<DriveConfig>('settings/drive', { folders: [] });
   const rolePermissions = rbac.permissions;
   const setRolePermissions = (p: Any) => setRbac((r) => ({ permissions: typeof p === 'function' ? p(r.permissions) : p }));
 
@@ -244,21 +256,29 @@ export default function App() {
   };
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden fluent-ambient-bg text-[#1C1C1E] dark:text-[#F2F2F7] transition-colors">
+    <div className="flex h-[100dvh] w-full overflow-hidden fluent-ambient-bg text-[#1C1C1E] dark:text-[#F2F2F7] transition-colors">
       {/* Sidebar Navigation with Collapse Toggle & Admin tab */}
+      {isNarrow && mobileNavOpen && (
+        <div className="fixed inset-0 z-40 bg-black/30 backdrop-blur-[2px]" onClick={() => setMobileNavOpen(false)} />
+      )}
+      <div
+        className={isNarrow ? 'fixed inset-y-0 left-0 z-50 flex max-w-[86vw] transition-transform duration-300' : 'flex'}
+        style={isNarrow ? { transform: mobileNavOpen ? 'translateX(0)' : 'translateX(-105%)' } : undefined}
+      >
       <Sidebar
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={navigate}
         unprocessedEmailsCount={unprocessedEmailsCount}
         totalCandidatesCount={candidates.length}
         openJobsCount={jobs.length}
         mailboxSettings={mailboxSettings}
         onQuickScan={handleBatchScanEmails}
         isScanning={isScanning}
-        isCollapsed={isSidebarCollapsed}
-        onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+        isCollapsed={isNarrow ? false : isSidebarCollapsed}
+        onToggleCollapse={() => (isNarrow ? setMobileNavOpen(false) : setIsSidebarCollapsed(!isSidebarCollapsed))}
         currentUser={currentUser}
       />
+      </div>
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
@@ -273,7 +293,8 @@ export default function App() {
           onToggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
           isDarkMode={isDarkMode}
           onToggleDarkMode={() => setIsDarkMode(!isDarkMode)}
-          onNavigate={setActiveTab}
+          onNavigate={navigate}
+          onOpenMobileNav={isNarrow ? () => setMobileNavOpen(true) : undefined}
           candidates={candidates}
           jobs={jobs}
           inboundEmails={inboundEmails}
@@ -361,18 +382,17 @@ export default function App() {
           )}
 
           {activeTab === 'candidates' && (
-            <DriveImportPanel
-              folders={driveCfg.folders || []}
-              onUpdateFolders={(f) => setDriveCfg({ folders: f })}
-              jobs={jobs}
-              candidates={candidates}
-              onAddCandidate={handleAddCandidate}
-              makeCandidate={makeCandidate}
-            />
-          )}
-
-          {activeTab === 'candidates' && (
             <CandidatesView
+              driveImportSlot={
+                <DriveImportPanel
+                  config={driveCfg}
+                  onUpdateConfig={setDriveCfg}
+                  jobs={jobs}
+                  candidates={candidates}
+                  onAddCandidate={handleAddCandidate}
+                  makeCandidate={makeCandidate}
+                />
+              }
               candidates={candidates}
               jobs={jobs}
               onAddCandidate={handleAddCandidate}

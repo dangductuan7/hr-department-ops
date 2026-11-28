@@ -318,3 +318,14 @@
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(142, 142, 147, 0.6);
 }
+
+/* ===== SEICO: responsive cho mọi kích thước ===== */
+select, input, textarea { max-width: 100%; }
+select { text-overflow: ellipsis; }
+main img, main canvas, main svg { max-width: 100%; }
+main pre, main code { white-space: pre-wrap; overflow-wrap: anywhere; }
+@media (max-width: 640px) {
+  main table { font-size: 12.5px; }
+}
+main :where(div, section, form, header, article, label, aside, nav, ul, li) { min-width: 0; }
+main :where(.overflow-x-auto, .overflow-auto) { max-width: 100%; }

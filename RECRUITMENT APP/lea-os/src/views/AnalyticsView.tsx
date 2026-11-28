@@ -314,7 +314,7 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({ jobs, candidates }
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+        <div className="flex flex-wrap items-center gap-2.5 min-w-0">
           {/* iOS Segmented Control for Time Range */}
           <div className="ios-segmented flex items-center gap-0.5">
             {(
