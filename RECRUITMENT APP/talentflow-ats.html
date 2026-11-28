@@ -1,4 +1,4 @@
-<title>TalentFlow ATS</title>
+<title>SEICO Recruitment app</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
@@ -153,19 +153,19 @@ ul.pl{margin:4px 0 12px;padding-left:18px;font-size:14px}
           <div class="row"><select id="jdDept" style="width:auto"></select><select id="jdStat" style="width:auto"><option value="">Mọi trạng thái</option><option value="Open">Đang mở</option><option value="Draft">Nháp</option><option value="Closed">Đã đóng</option></select></div></div>
         <div class="jdl" id="jdList"></div>
       </div>
-      <div class="card"><h2>Thư viện mẫu chuẩn</h2><p class="note" style="margin:-6px 0 12px">Mức lương để “Thỏa thuận”; anh/chị điều chỉnh theo khung lương nội bộ.</p><div class="jdl" id="tplList"></div></div>
+      <div class="card"><div class="row" style="justify-content:space-between"><h2 style="margin:0">Sơ đồ tổ chức SEICO</h2><span class="meta">Theo hồ sơ năng lực 07/2026 (→ about §9.1)</span></div><p class="note" style="margin:4px 0 12px">⚠️ Chưa đối chiếu với phụ lục Thông báo 20/2026/TB-SEICO. Bấm một đơn vị để lọc JD.</p><div id="orgChart"></div></div>
     </div>
     <div class="card det" id="jdSide">
       <h2>AI tạo JD mới</h2>
       <form id="jdForm">
         <div class="f"><label for="g_title">Chức danh *</label><input id="g_title" required placeholder="Ví dụ: Chuyên viên Tuyển dụng"></div>
         <div class="fr">
-          <div class="f"><label for="g_dept">Phòng ban</label><input id="g_dept" value="Nhân sự"></div>
+          <div class="f"><label for="g_dept">Đơn vị</label><select id="g_dept"></select></div>
           <div class="f"><label for="g_level">Cấp bậc</label><select id="g_level"><option>Junior</option><option selected>Middle</option><option>Senior</option><option>Lead</option><option>Manager</option></select></div>
           <div class="f"><label for="g_exp">Số năm kinh nghiệm</label><input id="g_exp" type="number" min="0" max="30" value="2"></div>
           <div class="f"><label for="g_sal">Mức lương</label><input id="g_sal" value="Thỏa thuận"></div>
         </div>
-        <div class="f"><label for="g_loc">Địa điểm</label><input id="g_loc" value="TP. Hồ Chí Minh"></div>
+        <div class="f"><label for="g_loc">Địa điểm</label><input id="g_loc" value="Hà Nội"></div>
         <div class="f"><label for="g_skills">Kỹ năng chính (phân cách bằng dấu phẩy)</label><input id="g_skills" placeholder="Phỏng vấn hành vi, sàng lọc CV, Excel"></div>
         <div class="f"><label for="g_ben">Quyền lợi nổi bật</label><input id="g_ben" placeholder="Bảo hiểm sức khỏe, lương tháng 13"></div>
         <button class="btn p" id="g_btn" style="width:100%">Tạo JD bằng AI</button>
@@ -192,13 +192,13 @@ ul.pl{margin:4px 0 12px;padding-left:18px;font-size:14px}
       <h2>Tùy chỉnh banner</h2>
       <div class="fr">
         <div class="f"><label for="b_tpl">Mẫu thiết kế</label><select id="b_tpl"><option value="modern">Hiện đại</option><option value="minimal">Tối giản</option><option value="bold">Đậm nét</option></select></div>
-        <div class="f"><label for="b_co">Tên công ty</label><input id="b_co" value="Công ty của bạn"></div>
+        <div class="f"><label for="b_co">Tên công ty</label><input id="b_co" value="SEICO"></div>
       </div>
       <div class="f"><label>Màu chủ đạo</label><div class="sw" id="b_sw"></div></div>
       <div class="f"><label for="b_title">Chức danh</label><input id="b_title"></div>
       <div class="fr"><div class="f"><label for="b_sal">Mức lương</label><input id="b_sal"></div><div class="f"><label for="b_loc">Địa điểm</label><input id="b_loc"></div></div>
       <div class="f"><label for="b_ben">Phúc lợi (mỗi dòng một ý, tối đa 4)</label><textarea id="b_ben" style="min-height:90px"></textarea></div>
-      <div class="f"><label for="b_cta">Lời kêu gọi</label><input id="b_cta" value="Gửi CV: tuyendung@congty.vn"></div>
+      <div class="f"><label for="b_cta">Lời kêu gọi</label><input id="b_cta" value="Gửi CV: hr@seico.vn"></div>
       <button class="btn s" id="b_idea">AI gợi ý ý tưởng hình ảnh</button>
       <div id="b_ideaOut" class="note"></div>
     </div>
@@ -215,7 +215,7 @@ ul.pl{margin:4px 0 12px;padding-left:18px;font-size:14px}
 <!-- 4. KÊNH -->
 <section id="v-chan" hidden>
   <div class="head"><div><h1>Kênh tuyển dụng</h1><p class="sub">Tài khoản đăng tin, trạng thái kết nối và nhật ký xuất bản</p></div>
-  <div class="row"><select id="c_job" style="width:auto"></select><button class="btn p" id="c_pub">Đăng tin đồng loạt</button></div></div>
+  <div class="row"><select id="c_job" style="width:auto"></select><button class="btn p" id="c_pub">Ghi nhận đã đăng (sau duyệt)</button></div></div>
   <div class="card" style="margin-bottom:16px"><div class="scroll"><table class="stack"><thead><tr><th>Kênh</th><th>Đường dẫn</th><th>ID đăng nhập</th><th>Trạng thái</th><th>Đồng bộ gần nhất</th><th>Tin đã đăng</th><th></th></tr></thead><tbody id="chanBody"></tbody></table></div></div>
   <div class="grid g2">
     <div class="card"><h2 id="c_formT">Thêm kênh</h2>
@@ -226,7 +226,7 @@ ul.pl{margin:4px 0 12px;padding-left:18px;font-size:14px}
         <div class="row"><button class="btn p">Lưu kênh</button><button class="btn" type="button" id="c_reset">Hủy</button></div>
       </form>
     </div>
-    <div class="card"><h2>Nhật ký xuất bản</h2><ul class="feed" id="pubLog"></ul><p class="note">Bản hiện tại mô phỏng thao tác đăng; chưa gọi API thật của các trang việc làm.</p></div>
+    <div class="card"><h2>Nhật ký xuất bản</h2><ul class="feed" id="pubLog"></ul><p class="note">Theo AGENT.md Tuyển dụng §6: tin chỉ đăng sau khi người có thẩm quyền duyệt và Truyền thông nội bộ rà soát nhận diện. Nút này chỉ ghi nhận việc đăng vào nhật ký, không tự đăng lên trang việc làm.</p></div>
   </div>
 </section>
 
@@ -238,14 +238,14 @@ ul.pl{margin:4px 0 12px;padding-left:18px;font-size:14px}
     <div class="card"><div class="scroll"><table class="stack"><thead><tr><th>Người gửi</th><th>Tiêu đề</th><th>Tệp đính kèm</th><th>Nhận lúc</th><th>Trạng thái</th><th></th></tr></thead><tbody id="mailBody"></tbody></table></div></div>
     <div class="card det"><h2>Cấu hình hòm thư</h2>
       <form id="mbForm">
-        <div class="f"><label for="mb_addr">Địa chỉ hòm thư</label><input id="mb_addr" type="email" placeholder="hr@company.com"></div>
+        <div class="f"><label for="mb_addr">Địa chỉ hòm thư</label><input id="mb_addr" type="email" placeholder="hr@seico.vn"></div>
         <div class="f"><label for="mb_auth">Phương thức xác thực</label><select id="mb_auth"><option>Mật khẩu ứng dụng (App Password)</option><option>ID / Mật khẩu</option><option>OAuth</option></select></div>
         <div class="f"><label for="mb_pw">Mật khẩu</label><input id="mb_pw" type="password" autocomplete="off" placeholder="Không lưu vào cơ sở dữ liệu"></div>
         <div class="f"><label for="mb_int">Chu kỳ quét (phút)</label><input id="mb_int" type="number" min="1" max="240" value="15"></div>
         <button class="btn p">Lưu cấu hình</button>
       </form>
       <p class="note" id="mb_last"></p>
-      <p class="note">Quét định kỳ chạy khi trang đang mở. Danh sách email hiện là hòm thư mô phỏng; kết nối Gmail thật cần bổ sung ở bước sau.</p>
+      <p class="note">Quét định kỳ chạy khi trang đang mở. Hòm thư chưa nối máy chủ thư thật; CV thật hiện nhập qua mục “Nhập CV từ Google Drive” ở trang Hồ sơ ứng viên.</p>
     </div>
   </div>
 </section>
@@ -253,6 +253,12 @@ ul.pl{margin:4px 0 12px;padding-left:18px;font-size:14px}
 <!-- 6. ỨNG VIÊN -->
 <section id="v-cand" hidden>
   <div class="head"><div><h1>Hồ sơ ứng viên &amp; Benchmark</h1><p class="sub">Chấm điểm 5 sao theo ma trận đối chiếu yêu cầu của JD</p></div></div>
+  <div class="card" style="margin-bottom:16px">
+    <div class="row" style="justify-content:space-between;margin-bottom:10px"><h2 style="margin:0">Nhập CV từ Google Drive</h2><div class="row"><button class="btn" id="d_stop" hidden>Dừng</button><button class="btn p" id="d_run">Nhập CV mới</button></div></div>
+    <p class="note" style="margin:-4px 0 10px">Đọc thư mục <span class="mono">O - SEICO-APP/Recruitment/DOCUMENT/Curriculum Vitae/</span>, bỏ qua CV đã nhập, chấm benchmark theo JD gán cho từng thư mục.</p>
+    <div class="scroll"><table class="stack"><thead><tr><th>Thư mục CV</th><th>Chấm theo JD</th><th>Đã nhập</th></tr></thead><tbody id="driveBody"></tbody></table></div>
+    <p class="note" id="d_msg"></p>
+  </div>
   <div class="card" style="margin-bottom:16px">
     <div class="row" style="justify-content:space-between;margin-bottom:10px"><h2 style="margin:0">Kéo thả nạp CV</h2><div class="row"><label for="u_job" style="margin:0">Đối chiếu với JD</label><select id="u_job" style="width:auto"></select></div></div>
     <div class="drop" id="drop" tabindex="0" role="button"><b>Thả tệp CV vào đây hoặc bấm để chọn</b>PDF, DOCX, TXT hoặc ảnh chụp CV; nhận nhiều tệp cùng lúc</div>
@@ -283,22 +289,21 @@ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const arr=v=>Array.isArray(v)?v:[];
 const STAGES={New:'Mới',Screened:'Đã chấm điểm',Interviewing:'Phỏng vấn',Offered:'Đề nghị việc',Rejected:'Từ chối'};
 const STATUS={Open:'Đang mở',Draft:'Nháp',Closed:'Đã đóng'};
-const SRC={'Email Auto-Sync':'Email tự động','File Upload':'Tải tệp','TopCV Channel':'Kênh TopCV','LinkedIn':'LinkedIn'};
+const SRC={'Email Auto-Sync':'Email tự động','File Upload':'Tải tệp','Google Drive':'Google Drive','TopCV Channel':'Kênh TopCV','LinkedIn':'LinkedIn'};
 const W={skillsScore:.35,experienceScore:.30,educationScore:.15,cultureScore:.20};
 const MXL={skillsScore:'Kỹ năng chuyên môn',experienceScore:'Số năm kinh nghiệm',educationScore:'Học vấn & chứng chỉ',cultureScore:'Phù hợp văn hóa'};
-const S={jobs:[],cands:[],chans:[],emails:[],logs:[],mailbox:{},view:'dash',sel:null,jdSel:null,editChan:null,plat:'Facebook',size:'169',color:'#1e40af',auto:null};
-let db=null,sample=null,downloads=null;
+const S={jobs:[],cands:[],chans:[],emails:[],logs:[],mailbox:{},drive:{folders:[]},view:'dash',sel:null,jdSel:null,editChan:null,plat:'Facebook',size:'169',color:'#1e40af',auto:null};
+let db=null,sample=null,downloads=null,mcp=null;
 
-const TPL=[
- {title:'Frontend Developer',department:'Công nghệ',level:'Middle',description:'Xây dựng và tối ưu giao diện web cho sản phẩm của công ty, phối hợp với đội thiết kế và backend.',requirements:['Thành thạo JavaScript/TypeScript, React','Hiểu HTML, CSS, thiết kế đáp ứng','Có kinh nghiệm làm việc với REST API','Sử dụng Git trong làm việc nhóm'],benefits:['Bảo hiểm theo quy định','Lương tháng 13','Thiết bị làm việc'],benchmarkCriteria:{technicalSkills:['JavaScript','TypeScript','React','CSS','Git'],minExperienceYears:2,educationLevel:'Cao đẳng/Đại học CNTT hoặc tương đương',culturalFitTraits:['Chủ động','Hợp tác','Ham học hỏi']}},
- {title:'Backend Developer',department:'Công nghệ',level:'Senior',description:'Thiết kế, phát triển và vận hành dịch vụ phía máy chủ, cơ sở dữ liệu và API.',requirements:['Thành thạo Node.js hoặc Java','Thiết kế cơ sở dữ liệu SQL','Kinh nghiệm Docker, CI/CD','Hiểu bảo mật ứng dụng web'],benefits:['Bảo hiểm theo quy định','Lương tháng 13','Ngân sách đào tạo'],benchmarkCriteria:{technicalSkills:['Node.js','Java','SQL','Docker','API'],minExperienceYears:4,educationLevel:'Đại học CNTT',culturalFitTraits:['Trách nhiệm','Tư duy hệ thống']}},
- {title:'Product Manager',department:'Sản phẩm',level:'Senior',description:'Định hướng lộ trình sản phẩm, làm việc với khách hàng và đội kỹ thuật để đưa tính năng ra thị trường.',requirements:['Kinh nghiệm quản lý sản phẩm số','Phân tích dữ liệu người dùng','Viết yêu cầu sản phẩm rõ ràng','Kỹ năng giao tiếp với các bên liên quan'],benefits:['Bảo hiểm theo quy định','Thưởng theo kết quả'],benchmarkCriteria:{technicalSkills:['Lộ trình sản phẩm','Phân tích dữ liệu','Agile','Nghiên cứu người dùng'],minExperienceYears:4,educationLevel:'Đại học',culturalFitTraits:['Lấy khách hàng làm trung tâm','Ra quyết định']}},
- {title:'UI/UX Designer',department:'Sản phẩm',level:'Middle',description:'Thiết kế trải nghiệm và giao diện cho ứng dụng web và di động.',requirements:['Thành thạo Figma','Có hồ sơ dự án (portfolio)','Hiểu nghiên cứu người dùng','Xây dựng hệ thống thiết kế'],benefits:['Bảo hiểm theo quy định','Thời gian linh hoạt'],benchmarkCriteria:{technicalSkills:['Figma','Wireframe','Prototype','Nghiên cứu người dùng'],minExperienceYears:2,educationLevel:'Đại học/Cao đẳng thiết kế',culturalFitTraits:['Sáng tạo','Lắng nghe']}},
- {title:'Sales Lead',department:'Kinh doanh',level:'Lead',description:'Dẫn dắt nhóm kinh doanh B2B, xây dựng pipeline và đạt chỉ tiêu doanh số.',requirements:['Kinh nghiệm bán hàng B2B','Quản lý nhóm từ 3 người','Sử dụng CRM','Kỹ năng đàm phán'],benefits:['Hoa hồng theo doanh số','Bảo hiểm theo quy định'],benchmarkCriteria:{technicalSkills:['B2B','CRM','Đàm phán','Quản lý pipeline'],minExperienceYears:5,educationLevel:'Đại học',culturalFitTraits:['Định hướng kết quả','Truyền cảm hứng']}},
- {title:'HR Manager',department:'Nhân sự',level:'Manager',description:'Quản lý toàn diện hoạt động nhân sự: tuyển dụng, đào tạo, C&B, quan hệ lao động và văn hóa doanh nghiệp.',requirements:['Kinh nghiệm quản lý nhân sự','Am hiểu Bộ luật Lao động 2019','Xây dựng chính sách lương thưởng','Kỹ năng tư vấn cho ban lãnh đạo'],benefits:['Bảo hiểm theo quy định','Lương tháng 13','Thưởng hiệu quả'],benchmarkCriteria:{technicalSkills:['Tuyển dụng','C&B','Luật Lao động','Đào tạo','Văn hóa doanh nghiệp'],minExperienceYears:5,educationLevel:'Đại học Quản trị nhân lực hoặc tương đương',culturalFitTraits:['Chính trực','Bảo mật','Thấu cảm']}},
- {title:'Digital Marketing Executive',department:'Marketing',level:'Junior',description:'Triển khai chiến dịch quảng cáo trực tuyến và nội dung trên mạng xã hội.',requirements:['Chạy quảng cáo Facebook/Google','Viết nội dung','Đọc số liệu chiến dịch'],benefits:['Bảo hiểm theo quy định','Môi trường trẻ'],benchmarkCriteria:{technicalSkills:['Facebook Ads','Google Ads','Content','Analytics'],minExperienceYears:1,educationLevel:'Cao đẳng/Đại học',culturalFitTraits:['Sáng tạo','Nhanh nhạy']}},
- {title:'Kế toán tổng hợp',department:'Tài chính',level:'Middle',description:'Hạch toán, lập báo cáo tài chính và báo cáo thuế định kỳ.',requirements:['Nắm vững chuẩn mực kế toán Việt Nam','Sử dụng phần mềm kế toán','Lập báo cáo thuế'],benefits:['Bảo hiểm theo quy định','Lương tháng 13'],benchmarkCriteria:{technicalSkills:['Kế toán tổng hợp','Báo cáo thuế','Excel','MISA'],minExperienceYears:3,educationLevel:'Đại học Kế toán',culturalFitTraits:['Cẩn thận','Trung thực']}}
+const ORG=[
+ {block:'Quản trị',units:['Hội đồng quản trị','Kiểm soát nội bộ','Ban Tổng Giám đốc']},
+ {block:'Khối Phục vụ',units:['Phòng Nhân sự','Phòng Tài chính – Kế toán','Phòng Hành chính – Pháp chế','Phòng Công nghệ và Hạ tầng số']},
+ {block:'Khối Kinh doanh',units:['Ban Kinh doanh dự án nội địa','Ban Kinh doanh dự án xuất khẩu','Ban Dự án','Phòng Kinh doanh thương mại','Phòng Marketing']},
+ {block:'Khối Sản xuất',units:['Ban Chất lượng','Ban Kế hoạch sản xuất','Thiết kế sản xuất','Nhà máy I','Nhà máy II','Nhà máy III','Nhà máy sơn','Ban Nghiên cứu và sản xuất sơn']},
+ {block:'Khối Thi công',units:['Ban Điều hành','Ban An toàn','Ban Chỉ huy công trường']}
 ];
+const UNITS=ORG.flatMap(o=>o.units.map(u=>({u,b:o.block})));
+const blockOf=u=>(UNITS.find(x=>x.u===u)||{}).b||'';
 
 const toast=t=>{const e=$('#toast');e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>e.hidden=true,3200)};
 const now=()=>new Date().toISOString();
@@ -313,7 +318,7 @@ $('#nav').onclick=e=>{const b=e.target.closest('button');if(b)go(b.dataset.v)};
 document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g)go(g.dataset.go)});
 
 /* ---------- render ---------- */
-function render(){renderDash();renderJD();renderSelects();renderChans();renderMail();renderCands();}
+function render(){renderDash();renderJD();renderSelects();renderChans();renderMail();renderCands();renderDrive();}
 
 function renderDash(){
   const c=S.cands, open=S.jobs.filter(j=>j.status==='Open').length;
@@ -333,59 +338,83 @@ function renderDash(){
   $('#feed').innerHTML=S.logs.length?S.logs.slice(0,12).map(l=>`<li><time>${esc(fmt(l.at))}</time><span>${esc(l.text)}</span></li>`).join(''):'<li class="empty" style="display:block">Chưa có hoạt động</li>';
 }
 
-function jdCard(j,tplIdx){
-  const st=j.status?`<span class="tag ${j.status==='Open'?'ok':''}">${STATUS[j.status]||esc(j.status)}</span>`:'';
-  const n=tplIdx==null?S.cands.filter(c=>c.jobId===j.id).length:null;
-  return `<div class="jd"><div class="row" style="justify-content:space-between"><span class="meta">${esc(j.department)} · ${esc(j.level)}</span>${st}</div><h3>${esc(j.title)}</h3><span class="meta">${esc(arr(j.benchmarkCriteria?.technicalSkills).slice(0,4).join(', '))}</span>
-  <div class="row" style="margin-top:auto;padding-top:6px">${tplIdx!=null?`<button class="btn s" data-tpl="${tplIdx}">Thêm vào hệ thống</button>`:`<button class="btn s" data-jdv="${esc(j.id)}">Xem</button><span class="meta">${n} ứng viên</span>`}</div></div>`;
+const lab=st=>st==='ASSUMPTION'?'<span class="tag" title="Tiêu chí tạm, chưa có MTCV chính thức">ASSUMPTION</span>':st?'<span class="tag ok" title="Lấy từ bản mô tả công việc chính thức">MTCV</span>':'';
+function jdCard(j){
+  const n=S.cands.filter(c=>c.jobId===j.id).length;
+  return `<div class="jd"><div class="row" style="justify-content:space-between"><span class="meta">${esc(j.department)}</span><span class="tag ${j.status==='Open'?'ok':''}">${STATUS[j.status]||esc(j.status)}</span></div><h3>${esc(j.title)}</h3><span class="meta">${esc(j.location)} · ${esc(j.salaryRange)}${j.quantity?' · SL '+esc(j.quantity):''}</span>
+  <div class="row" style="margin-top:auto;padding-top:6px"><button class="btn s" data-jdv="${esc(j.id)}">Xem</button><span class="meta">${n} ứng viên</span>${lab(j.criteriaStatus)}</div></div>`;
+}
+function renderOrg(){
+  const fd=$('#jdDept').value;
+  $('#orgChart').innerHTML=ORG.map(o=>`<div style="display:grid;grid-template-columns:8.5em minmax(0,1fr);gap:10px;padding:8px 0;border-top:1px solid var(--line)"><b style="font-size:14px">${esc(o.block)}</b><div class="row" style="gap:6px">${o.units.map(u=>{const k=S.jobs.filter(j=>j.department===u&&j.status==='Open').length;return `<button class="btn s" data-unit="${esc(u)}" style="${u===fd?'border-color:var(--blue);background:var(--soft)':''}">${esc(u)}${k?` <b class="mono" style="color:var(--ok)">${k}</b>`:''}</button>`}).join('')}</div></div>`).join('');
 }
 function renderJD(){
-  const depts=[...new Set([...S.jobs,...TPL].map(j=>j.department).filter(Boolean))];
-  const cur=$('#jdDept').value;$('#jdDept').innerHTML='<option value="">Mọi phòng ban</option>'+depts.map(d=>`<option ${d===cur?'selected':''}>${esc(d)}</option>`).join('');
+  const cur=$('#jdDept').value;$('#jdDept').innerHTML='<option value="">Mọi đơn vị</option>'+ORG.map(o=>`<optgroup label="${esc(o.block)}">${o.units.map(u=>`<option ${u===cur?'selected':''}>${esc(u)}</option>`).join('')}</optgroup>`).join('');
+  const gd=$('#g_dept');if(!gd.options.length)gd.innerHTML=ORG.map(o=>`<optgroup label="${esc(o.block)}">${o.units.map(u=>`<option ${u==='Phòng Nhân sự'?'selected':''}>${esc(u)}</option>`).join('')}</optgroup>`).join('');
   const fd=$('#jdDept').value, fs=$('#jdStat').value;
-  const list=S.jobs.filter(j=>(!fd||j.department===fd)&&(!fs||j.status===fs));
-  $('#jdList').innerHTML=list.length?list.map(j=>jdCard(j)).join(''):'<div class="empty">Chưa có JD. Thêm từ thư viện mẫu hoặc tạo bằng AI.</div>';
-  $('#tplList').innerHTML=TPL.map((t,i)=>(!fd||t.department===fd)?jdCard(t,i):'').join('');
-  if(S.jdSel)showJD(S.jdSel);
+  const list=S.jobs.filter(j=>(!fd||j.department===fd)&&(!fs||j.status===fs)).sort((a,b)=>(a.status==='Open'?0:1)-(b.status==='Open'?0:1));
+  $('#jdList').innerHTML=list.length?list.map(jdCard).join(''):'<div class="empty">Không có JD cho bộ lọc này. Tạo JD bằng AI ở cột bên.</div>';
+  renderOrg();
+  if(S.jdSel&&!S.jdEdit)showJD(S.jdSel);
 }
 $('#jdDept').onchange=$('#jdStat').onchange=renderJD;
+const lines=v=>String(v||'').split('\n').map(x=>x.trim()).filter(Boolean);
 $('#v-jd').addEventListener('click',async e=>{
-  const t=e.target.closest('[data-tpl]'),v=e.target.closest('[data-jdv]');
-  if(t){const tp=TPL[+t.dataset.tpl];await saveJob({...tp,salaryRange:'Thỏa thuận',location:'TP. Hồ Chí Minh',status:'Draft'});}
-  if(v){S.jdSel=v.dataset.jdv;showJD(S.jdSel);}
-  const a=e.target.closest('[data-jda]');
-  if(a){const id=S.jdSel,act=a.dataset.jda;
-    if(act==='close'){S.jdSel=null;$('#jdView').hidden=true;$('#jdForm').hidden=false;return}
-    if(act==='del'){if(a.dataset.c){await db.doc('jobs/'+id).delete();S.jdSel=null;$('#jdView').hidden=true;$('#jdForm').hidden=false;toast('Đã xóa JD');}else{a.dataset.c=1;a.textContent='Bấm lần nữa để xóa';}return}
-    if(act==='post'){$('#p_job').value=id;loadBannerFromJob();go('post');return}
-    await db.doc('jobs/'+id).update({status:act});toast('Đã cập nhật trạng thái');}
+  const u=e.target.closest('[data-unit]');if(u){$('#jdDept').value=$('#jdDept').value===u.dataset.unit?'':u.dataset.unit;renderJD();return}
+  const v=e.target.closest('[data-jdv]');if(v){S.jdSel=v.dataset.jdv;S.jdEdit=false;showJD(S.jdSel);if(innerWidth<1000)$('#jdSide').scrollIntoView({behavior:'smooth'});return}
+  const a=e.target.closest('[data-jda]');if(!a)return;const id=S.jdSel,act=a.dataset.jda,j=jobById(id);
+  if(act==='close'){S.jdSel=null;S.jdEdit=false;$('#jdView').hidden=true;$('#jdForm').hidden=false;return}
+  if(act==='del'){if(a.dataset.c){await db.doc('jobs/'+id).delete();S.jdSel=null;$('#jdView').hidden=true;$('#jdForm').hidden=false;toast('Đã xóa JD');}else{a.dataset.c=1;a.textContent='Bấm lần nữa để xóa';}return}
+  if(act==='post'){$('#p_job').value=id;loadBannerFromJob();go('post');return}
+  if(act==='edit'){S.jdEdit=true;editJD(j);return}
+  if(act==='cancel'){S.jdEdit=false;showJD(id);return}
+  if(act==='save'){const b=j.benchmarkCriteria||{};const g=k=>$('#e_'+k).value;
+    await db.doc('jobs/'+id).update({title:g('title').trim(),department:g('dept'),block:blockOf(g('dept')),level:g('level'),salaryRange:g('sal'),location:g('loc'),quantity:g('qty'),description:g('desc'),requirements:lines(g('req')),benefits:lines(g('ben')),benchmarkCriteria:{...b,technicalSkills:g('skills').split(',').map(x=>x.trim()).filter(Boolean),minExperienceYears:+g('exp')||0,educationLevel:g('edu'),culturalFitTraits:g('cul').split(',').map(x=>x.trim()).filter(Boolean)},criteriaStatus:$('#e_ok').checked?'MTCV':'ASSUMPTION'});
+    S.jdEdit=false;log('jd',`Cập nhật JD “${g('title')}”`);toast('Đã lưu JD');return}
+  await db.doc('jobs/'+id).update({status:act});toast('Đã cập nhật trạng thái');
 });
 function showJD(id){
   const j=jobById(id);if(!j)return;const b=j.benchmarkCriteria||{};
   $('#jdForm').hidden=true;const v=$('#jdView');v.hidden=false;
-  v.innerHTML=`<div class="row" style="justify-content:space-between"><span class="meta">${esc(j.department)} · ${esc(j.level)} · ${esc(j.location)}</span><button class="btn s" data-jda="close">Đóng</button></div>
-  <h2 style="margin-top:8px">${esc(j.title)}</h2><p class="meta">Mức lương: ${esc(j.salaryRange)}</p><p style="font-size:14px">${esc(j.description)}</p>
-  <h3>Yêu cầu</h3><ul class="pl">${arr(j.requirements).map(r=>`<li>${esc(r)}</li>`).join('')}</ul>
-  <h3>Quyền lợi</h3><ul class="pl">${arr(j.benefits).map(r=>`<li>${esc(r)}</li>`).join('')}</ul>
-  <h3>Tiêu chí benchmark</h3><ul class="pl"><li>Kỹ năng: ${esc(arr(b.technicalSkills).join(', '))}</li><li>Kinh nghiệm tối thiểu: ${esc(b.minExperienceYears)} năm</li><li>Học vấn: ${esc(b.educationLevel)}</li><li>Văn hóa: ${esc(arr(b.culturalFitTraits).join(', '))}</li></ul>
-  <div class="row"><button class="btn s p" data-jda="Open">Mở tuyển</button><button class="btn s" data-jda="Draft">Nháp</button><button class="btn s" data-jda="Closed">Đóng tuyển</button><button class="btn s" data-jda="post">Soạn tin</button><button class="btn s d" data-jda="del">Xóa</button></div>`;
+  v.innerHTML=`<div class="row" style="justify-content:space-between"><span class="meta">${esc(j.block||blockOf(j.department))} · ${esc(j.department)}</span><button class="btn s" data-jda="close">Đóng</button></div>
+  <h2 style="margin-top:8px">${esc(j.title)}</h2><p class="meta">${esc(j.level)} · ${esc(j.location)} · Lương: ${esc(j.salaryRange)}${j.quantity?' · SL '+esc(j.quantity):''}</p>
+  ${j.criteriaStatus==='ASSUMPTION'?'<div class="banner" style="margin:8px 0">Tiêu chí tạm (ASSUMPTION): chưa có MTCV chính thức trong hệ thống. Trưởng bộ phận cần duyệt trước khi dùng kết quả chấm điểm làm căn cứ.</div>':''}
+  <p style="font-size:14px">${esc(j.description)}</p>
+  <h3>Yêu cầu</h3><ul class="pl">${arr(j.requirements).map(r=>`<li>${esc(r)}</li>`).join('')||'<li>—</li>'}</ul>
+  <h3>Quyền lợi</h3><ul class="pl">${arr(j.benefits).map(r=>`<li>${esc(r)}</li>`).join('')||'<li class="meta">PENDING – chờ bộ phận Lương thưởng &amp; Phúc lợi cung cấp</li>'}</ul>
+  <h3>Tiêu chí benchmark ${lab(j.criteriaStatus)}</h3><ul class="pl"><li>Kỹ năng: ${esc(arr(b.technicalSkills).join(', '))}</li><li>Kinh nghiệm tối thiểu: ${esc(b.minExperienceYears)} năm</li><li>Học vấn: ${esc(b.educationLevel)}</li><li>Thái độ, phẩm chất: ${esc(arr(b.culturalFitTraits).join(', '))}</li></ul>
+  ${j.source?`<p class="note">Nguồn: ${esc(j.source)}</p>`:''}
+  <div class="row"><button class="btn s p" data-jda="Open">Mở tuyển</button><button class="btn s" data-jda="Draft">Nháp</button><button class="btn s" data-jda="Closed">Đóng tuyển</button><button class="btn s" data-jda="edit">Sửa</button><button class="btn s" data-jda="post">Soạn tin</button><button class="btn s d" data-jda="del">Xóa</button></div>`;
+}
+function editJD(j){
+  const b=j.benchmarkCriteria||{},f=(k,l,v,t='input')=>`<div class="f"><label for="e_${k}">${l}</label>${t==='ta'?`<textarea id="e_${k}" style="min-height:90px">${esc(v)}</textarea>`:`<input id="e_${k}" value="${esc(v)}">`}</div>`;
+  $('#jdView').innerHTML=`<h2>Sửa JD</h2>${f('title','Chức danh',j.title)}
+  <div class="f"><label for="e_dept">Đơn vị</label><select id="e_dept">${ORG.map(o=>`<optgroup label="${esc(o.block)}">${o.units.map(u=>`<option ${u===j.department?'selected':''}>${esc(u)}</option>`).join('')}</optgroup>`).join('')}</select></div>
+  <div class="fr"><div class="f"><label for="e_level">Cấp bậc</label><select id="e_level">${['Junior','Middle','Senior','Lead','Manager'].map(l=>`<option ${l===j.level?'selected':''}>${l}</option>`).join('')}</select></div>${f('qty','Số lượng',j.quantity||'')}</div>
+  <div class="fr">${f('sal','Mức lương',j.salaryRange)}${f('loc','Địa điểm',j.location)}</div>
+  ${f('desc','Mô tả',j.description,'ta')}${f('req','Yêu cầu (mỗi dòng một ý)',arr(j.requirements).join('\n'),'ta')}${f('ben','Quyền lợi (mỗi dòng một ý)',arr(j.benefits).join('\n'),'ta')}
+  ${f('skills','Kỹ năng benchmark (dấu phẩy)',arr(b.technicalSkills).join(', '))}<div class="fr">${f('exp','Số năm kinh nghiệm tối thiểu',b.minExperienceYears)}${f('edu','Học vấn',b.educationLevel)}</div>${f('cul','Thái độ, phẩm chất (dấu phẩy)',arr(b.culturalFitTraits).join(', '))}
+  <label style="display:flex;gap:8px;align-items:center;margin-bottom:12px"><input type="checkbox" id="e_ok" style="width:auto" ${j.criteriaStatus!=='ASSUMPTION'?'checked':''}> Tiêu chí đã được Trưởng bộ phận duyệt (bỏ nhãn ASSUMPTION)</label>
+  <div class="row"><button class="btn p s" data-jda="save">Lưu</button><button class="btn s" data-jda="cancel">Hủy</button></div>`;
 }
 async function saveJob(j){
   if(!db)return toast('Chưa kết nối cơ sở dữ liệu');
-  const ref=await db.collection('jobs').add({...j,createdAt:now()});log('jd',`Thêm JD “${j.title}”`);toast('Đã lưu JD vào hệ thống');return ref;
+  const ref=await db.collection('jobs').add({...j,block:blockOf(j.department),createdAt:now()});log('jd',`Thêm JD “${j.title}”`);toast('Đã lưu JD vào hệ thống');return ref;
 }
+const SEICO_CTX='Doanh nghiệp: SEICO – Công ty Cổ phần Nhà Khung thép và Thiết bị Công nghiệp (kết cấu thép, nhà thép tiền chế, tôn lợp, sơn công nghiệp). Khẩu hiệu: "SEICO – Chuẩn chất thép – Trọn niềm tin". Thời gian làm việc: khối sản xuất từ thứ Hai đến thứ Bảy; khối văn phòng từ thứ Hai đến sáng thứ Bảy (tuyệt đối không ghi "5 ngày/tuần" hay "nghỉ thứ Bảy"). Liên hệ tuyển dụng: hr@seico.vn. Không bịa phúc lợi, số liệu, mức lương; thiếu thì ghi "PENDING".';
 $('#jdForm').onsubmit=async e=>{
   e.preventDefault();if(!sample)return toast('Tính năng AI chưa được cấp quyền trên trang này');
   const btn=$('#g_btn');btn.disabled=true;btn.textContent='Đang tạo JD…';
   const inp={title:$('#g_title').value,department:$('#g_dept').value,level:$('#g_level').value,years:$('#g_exp').value,salary:$('#g_sal').value,location:$('#g_loc').value,skills:$('#g_skills').value,benefits:$('#g_ben').value};
   try{
-    const r=await sample.json(`Bạn là chuyên gia tuyển dụng tại Việt Nam. Viết bản mô tả công việc (JD) bằng tiếng Việt chuẩn, không chèn tiếng Anh trừ tên công cụ/kỹ năng phổ biến. Không bịa số liệu thị trường; dùng đúng mức lương người dùng cung cấp.
+    const r=await sample.json(`Bạn là chuyên gia tuyển dụng tại Việt Nam. Viết bản mô tả công việc (JD) bằng tiếng Việt chuẩn, thuật ngữ tiếng Anh phải kèm nghĩa tiếng Việt. ${SEICO_CTX} Dùng đúng mức lương người dùng cung cấp. Không đưa tiêu chí tuổi, giới tính.
 Thông tin đầu vào: ${JSON.stringify(inp)}
-Trả về DUY NHẤT JSON: {"title":string,"department":string,"level":"${inp.level}","salaryRange":string,"location":string,"description":string (2-3 câu),"requirements":string[] (5-7 ý),"benefits":string[] (4-6 ý),"benchmarkCriteria":{"technicalSkills":string[] (4-7 kỹ năng ngắn),"minExperienceYears":number,"educationLevel":string,"culturalFitTraits":string[] (2-4)}}`,{modelTier:'default'});
-    const ref=await saveJob({...r,level:inp.level,status:'Draft'});S.jdSel=ref.id;$('#jdForm').reset();
+Trả về DUY NHẤT JSON: {"title":string,"salaryRange":string,"location":string,"description":string (2-3 câu),"requirements":string[] (5-7 ý),"benefits":string[] (chỉ những quyền lợi người dùng cung cấp; không có thì mảng rỗng),"benchmarkCriteria":{"technicalSkills":string[] (4-7 kỹ năng ngắn),"minExperienceYears":number,"educationLevel":string,"culturalFitTraits":string[] (2-4)}}`,{modelTier:'default'});
+    const ref=await saveJob({...r,department:inp.department,level:inp.level,status:'Draft',criteriaStatus:'ASSUMPTION',source:'AI tạo từ thông số nhập tay – chờ duyệt'});S.jdSel=ref.id;$('#jdForm').reset();
   }catch(err){toast(err?.code==='not_granted'?'Anh/chị chưa cho phép trang gọi AI':'Không tạo được JD, vui lòng thử lại')}
   btn.disabled=false;btn.textContent='Tạo JD bằng AI';
 };
+
 
 /* ---------- select dùng chung ---------- */
 function renderSelects(){
@@ -436,7 +465,7 @@ $('#p_plat').onclick=e=>{const b=e.target.closest('button');if(!b)return;S.plat=
 $('#p_gen').onclick=async()=>{const j=jobById($('#p_job').value);if(!j)return toast('Chọn JD nguồn trước');if(!sample)return toast('Tính năng AI chưa được cấp quyền');
   const t=$('#p_text'),btn=$('#p_gen');btn.disabled=true;t.value='Đang soạn…';
   const guide={Facebook:'giọng thân thiện, có biểu tượng cảm xúc vừa phải, ngắn gọn, 5-8 hashtag tiếng Việt',LinkedIn:'giọng chuyên nghiệp, có cấu trúc rõ, 3-5 hashtag','Job Board':'định dạng tin tuyển dụng chuẩn: Mô tả, Yêu cầu, Quyền lợi, Cách ứng tuyển, không hashtag'}[S.plat];
-  try{const r=await sample(`Viết bài đăng tuyển dụng tiếng Việt cho nền tảng ${S.plat} (${guide}). Chỉ dùng thông tin trong JD, không bịa thêm số liệu. Kết thúc bằng lời kêu gọi hành động: "${$('#b_cta').value}". Chỉ trả về nội dung bài đăng.\nJD: ${JSON.stringify({title:j.title,department:j.department,level:j.level,salary:j.salaryRange,location:j.location,description:j.description,requirements:j.requirements,benefits:j.benefits})}`,{onText:({text})=>t.value=text});t.value=r.text;log('post',`Soạn bài ${S.plat} cho “${j.title}”`)}catch(e){t.value='';toast('Không soạn được bài, vui lòng thử lại')}
+  try{const r=await sample(`Viết bài đăng tuyển dụng tiếng Việt cho nền tảng ${S.plat} (${guide}). Chỉ dùng thông tin trong JD, không bịa thêm số liệu. ${SEICO_CTX} Có một câu xin ứng viên đồng ý cho SEICO lưu hồ sơ phục vụ tuyển dụng. Kết thúc bằng lời kêu gọi hành động: "${$('#b_cta').value}". Chỉ trả về nội dung bài đăng.\nJD: ${JSON.stringify({title:j.title,department:j.department,level:j.level,salary:j.salaryRange,location:j.location,description:j.description,requirements:j.requirements,benefits:j.benefits})}`,{onText:({text})=>t.value=text});t.value='[BẢN NHÁP – CHỜ DUYỆT]\n\n'+r.text;log('post',`Soạn bài ${S.plat} cho “${j.title}” (nháp)`)}catch(e){t.value='';toast('Không soạn được bài, vui lòng thử lại')}
   btn.disabled=false};
 $('#p_copy').onclick=async()=>{try{await navigator.clipboard.writeText($('#p_text').value);toast('Đã sao chép')}catch(e){$('#p_text').select();toast('Hãy nhấn Ctrl+C để sao chép')}};
 
@@ -505,7 +534,7 @@ function heuristic(text,job){
 }
 async function analyze(text,job,base){
   const b=job.benchmarkCriteria||{};let r=null;
-  if(sample&&text.trim()){try{r=await sample.json(`Bạn là chuyên gia đánh giá hồ sơ tuyển dụng. Đối chiếu CV với tiêu chí benchmark của JD. CHỈ dựa vào nội dung CV; thông tin không có thì ghi "Không có thông tin", tuyệt đối không suy diễn. Viết tiếng Việt.
+  if(sample&&text.trim()){try{r=await sample.json(`Bạn là chuyên gia đánh giá hồ sơ tuyển dụng. Đối chiếu CV với tiêu chí benchmark của JD. CHỈ dựa vào nội dung CV; thông tin không có thì ghi "Không có thông tin", tuyệt đối không suy diễn. Viết tiếng Việt. Không chấm điểm hay nhận xét theo tuổi, giới tính, quê quán, tình trạng hôn nhân.
 JD: ${JSON.stringify({title:job.title,level:job.level,requirements:job.requirements,benchmark:b})}
 CV:
 """${text.slice(0,14000)}"""
@@ -516,9 +545,43 @@ Chấm mỗi tiêu chí thang 1-5 (5 = vượt yêu cầu, 3 = đáp ứng một
   const em=(text.match(/[\w.+-]+@[\w-]+\.[\w.]+/)||[])[0],ph=(text.match(/(\+84|0)[\d .]{8,12}\d/)||[])[0];
   const pick=(a,b)=>a&&a!=='Không có thông tin'?a:b;
   const id=await nextId();
-  const c={jobId:job.id,jobTitle:job.title,fullName:pick(r.fullName,base.fullName)||'Chưa rõ tên',email:pick(r.email,base.email||em)||'',phone:pick(r.phone,ph)||'',appliedDate:now(),source:base.source,resumeFileName:base.resumeFileName||'',resumeTextSnippet:r.resumeTextSnippet||text.slice(0,160),benchmarkScore:score,matrixMatch:mx,strengths:arr(r.strengths),gapsOrRisks:arr(r.gapsOrRisks),interviewQuestions:arr(r.interviewQuestions).slice(0,3),summary:r.summary||'',stage:'Screened',notes:''};
+  const c={...(base.extra||{}),jobId:job.id,jobTitle:job.title,fullName:pick(r.fullName,base.fullName)||'Chưa rõ tên',email:pick(r.email,base.email||em)||'',phone:pick(r.phone,ph)||'',appliedDate:now(),source:base.source,resumeFileName:base.resumeFileName||'',resumeTextSnippet:r.resumeTextSnippet||text.slice(0,160),benchmarkScore:score,matrixMatch:mx,strengths:arr(r.strengths),gapsOrRisks:arr(r.gapsOrRisks),interviewQuestions:arr(r.interviewQuestions).slice(0,3),summary:r.summary||'',stage:'Screened',notes:''};
   await db.doc('cands/'+id).set(c);log('cand',`${id} ${c.fullName} – ${job.title}: ${score.toFixed(1)} sao`);return {id,...c};
 }
+
+/* ---------- nhập CV từ Google Drive ---------- */
+const GD='Google Drive';
+function renderDrive(){
+  const f=arr(S.drive.folders);if(!$('#driveBody'))return;
+  $('#driveBody').innerHTML=f.length?f.map((x,i)=>{const n=S.cands.filter(c=>c.driveFolderId===x.id).length;return `<tr><td data-l="Thư mục"><b>${esc(x.name)}</b></td><td data-l="Chấm theo JD"><select data-df="${i}" style="min-width:12em"><option value="">— Không nhập —</option>${S.jobs.map(j=>`<option value="${esc(j.id)}" ${j.id===x.jobId?'selected':''}>${esc(j.title)}</option>`).join('')}</select></td><td data-l="Đã nhập" class="mono">${n}</td></tr>`}).join(''):'<tr><td colspan="3" class="empty">Chưa cấu hình thư mục CV</td></tr>';
+}
+$('#driveBody').addEventListener('change',async e=>{const s=e.target.closest('[data-df]');if(!s)return;const f=arr(S.drive.folders).map(x=>({...x}));f[+s.dataset.df].jobId=s.value;await db.doc('settings/drive').set({...S.drive,folders:f});toast('Đã lưu cách gán JD')});
+const mcpMsg=e=>({server_not_connected:'Chưa có kết nối Google Drive: thêm Google Drive trong claude.ai Cài đặt → Kết nối.',needs_reauth:'Kết nối Google Drive đã hết hạn: kết nối lại trong claude.ai Cài đặt → Kết nối.',not_in_manifest:'Anh/chị chưa cho phép trang đọc Google Drive.',approval_required:'Cần anh/chị cho phép trang đọc Google Drive; bấm lại để cấp quyền.',blocked_by_policy:'Tổ chức đang chặn công cụ Google Drive cho trang này.',server_unavailable:'Google Drive tạm thời không phản hồi, thử lại sau ít phút.'}[e?.code]||'Lỗi Google Drive: '+(e?.code||'không rõ'));
+async function listFolder(id){
+  const out=[];let tok;for(let k=0;k<20;k++){const r=await mcp.callTool(GD,'search_files',{query:`parentId = '${id}' and mimeType != 'application/vnd.google-apps.folder'`,excludeContentSnippets:true,pageSize:100,...(tok?{pageToken:tok}:{})});const p=r.payload||{};out.push(...arr(p.files));tok=p.nextPageToken;if(!tok)break}
+  return out;
+}
+let dStop=false;
+$('#d_stop').onclick=()=>{dStop=true;$('#d_msg').textContent='Đang dừng sau CV hiện tại…'};
+$('#d_run').onclick=async()=>{
+  const msg=$('#d_msg');if(!mcp)return msg.textContent='Trình xem này chưa hỗ trợ kết nối Google Drive. Hãy mở artifact trên claude.ai.';
+  if(!sample)msg.textContent='AI chưa được cấp quyền: CV sẽ được chấm sơ bộ theo từ khóa.';
+  const folders=arr(S.drive.folders).filter(f=>f.jobId&&jobById(f.jobId));if(!folders.length)return msg.textContent='Chưa gán JD cho thư mục nào.';
+  const done=new Set(S.cands.map(c=>c.driveFileId).filter(Boolean));
+  $('#d_run').disabled=true;$('#d_stop').hidden=false;dStop=false;let ok=0,fail=0,skip=0;
+  try{
+    for(const f of folders){if(dStop)break;const job=jobById(f.jobId);msg.textContent=`Đang liệt kê thư mục ${f.name}…`;
+      const files=(await listFolder(f.id)).filter(x=>!done.has(x.id));
+      for(const x of files){if(dStop)break;msg.textContent=`${f.name}: đang xử lý ${x.title} (${ok+fail+1})…`;
+        try{const r=await mcp.callTool(GD,'read_file_content',{fileId:x.id});const text=String(r.payload?.fileContent||'');if(text.trim().length<80){skip++;continue}
+          await analyze(text,job,{source:'Google Drive',resumeFileName:x.title,fullName:String(x.title).replace(/\.[a-z]+$/i,''),extra:{driveFileId:x.id,driveFolderId:f.id,driveUrl:x.viewUrl||''}});done.add(x.id);ok++;}
+        catch(e){if(['server_not_connected','needs_reauth','not_in_manifest','approval_required','blocked_by_policy'].includes(e?.code))throw e;fail++}}
+    }
+    msg.textContent=`${dStop?'Đã dừng. ':''}Nhập xong ${ok} CV${fail?`, ${fail} CV lỗi`:''}${skip?`, ${skip} CV không trích được chữ (cần xem tay)`:''}.`;
+    if(ok)log('cand',`Nhập ${ok} CV từ Google Drive`);
+  }catch(e){msg.textContent=mcpMsg(e)}
+  $('#d_run').disabled=false;$('#d_stop').hidden=true;
+};
 
 /* ---------- tải CV ---------- */
 const loadJs=src=>new Promise((ok,no)=>{if(document.querySelector(`script[src="${src}"]`))return ok();const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s)});
@@ -557,7 +620,7 @@ function showCand(id,keep){
   if(keep&&el.contains(document.activeElement)&&document.activeElement.id==='cd_notes')return;
   const mx=c.matrixMatch||{},ok=c.benchmarkScore>=4;
   el.innerHTML=`<div class="row" style="justify-content:space-between"><span class="id">${esc(c.id)}</span><span class="tag ${ok?'ok':'nv'}">${ok?'Đạt benchmark':'Chưa đạt benchmark'}</span></div>
-  <h2 style="margin:8px 0 2px">${esc(c.fullName)}</h2><p class="meta" style="margin:0 0 12px">${esc(c.jobTitle)} · ${esc(c.email||'—')} · ${esc(c.phone||'—')}<br>${esc(SRC[c.source]||c.source)} · ${esc(c.resumeFileName||'')} · ${esc(fmt(c.appliedDate))}</p>
+  <h2 style="margin:8px 0 2px">${esc(c.fullName)}</h2>${/^https:\/\/drive\.google\.com\//.test(c.driveUrl||'')?`<p style="margin:0 0 6px"><a href="${esc(c.driveUrl)}" target="_blank" rel="noopener">Mở CV gốc trên Google Drive</a></p>`:''}<p class="meta" style="margin:0 0 12px">${esc(c.jobTitle)} · ${esc(c.email||'—')} · ${esc(c.phone||'—')}<br>${esc(SRC[c.source]||c.source)} · ${esc(c.resumeFileName||'')} · ${esc(fmt(c.appliedDate))}</p>
   <div class="row" style="gap:16px;align-items:flex-end"><div class="big" style="color:${ok?'var(--ok)':'var(--navy)'}">${(+c.benchmarkScore||0).toFixed(1)}</div><div>${stars(c.benchmarkScore)}<div class="meta">trên 5 sao</div></div></div>
   <div class="mx" style="margin:12px 0">${Object.keys(W).map(k=>`<div class="fl"><span>${MXL[k]} <span class="meta">${Math.round(W[k]*100)}%</span></span><div class="bar"><i style="width:${(mx[k]||0)/5*100}%;${mx[k]>=4?'background:var(--ok)':''}"></i></div><b class="mono">${mx[k]||0}/5</b></div>`).join('')}</div>
   ${c.summary?`<p style="font-size:14px">${esc(c.summary)}</p>`:''}
@@ -578,7 +641,7 @@ let v='dash';try{v=localStorage.getItem('tf_view')||'dash'}catch(e){}
 go(v);render();
 (async()=>{
   const cl=window.claude;if(!cl?.use){$('#who').textContent='Chế độ xem tĩnh';return}
-  [sample,downloads]=await Promise.all([cl.use('sample').catch(()=>null),cl.use('downloads').catch(()=>null)]);
+  [sample,downloads,mcp]=await Promise.all([cl.use('sample').catch(()=>null),cl.use('downloads').catch(()=>null),cl.use('mcp').catch(()=>null)]);
   db=await cl.use('db').catch(()=>null);
   if(!db){const s=$('#status');s.hidden=false;s.textContent='Không kết nối được cơ sở dữ liệu. Hãy đăng nhập claude.ai để xem và lưu dữ liệu tuyển dụng.';$('#who').textContent='Chưa kết nối dữ liệu';return}
   const timer=setTimeout(()=>{const s=$('#status');s.hidden=false;s.textContent='Dữ liệu tải chậm, vui lòng chờ thêm hoặc mở lại trang.'},10000);
@@ -588,6 +651,7 @@ go(v);render();
   sub('jobs','jobs');sub('cands','cands');sub('chans','chans');sub('emails','emails');
   sub('logs','logs',db.collection('logs').orderBy('at','desc').limit(60));
   db.doc('settings/mailbox').onSnapshot(s=>{S.mailbox=s.exists?s.data():{};renderMail()},()=>{});
+  db.doc('settings/drive').onSnapshot(s=>{S.drive=s.exists?s.data():{folders:[]};renderDrive()},()=>{});
   const u=await cl.use('user').catch(()=>null);const me=u&&await u.me().catch(()=>null);
   $('#who').textContent=me?.name?'Đăng nhập: '+me.name:'Đã kết nối dữ liệu';
   if(!sample){$('#g_btn').title='AI chưa khả dụng';}
